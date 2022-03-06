@@ -62,7 +62,8 @@ def fibonacci(function, left_border, right_border, error):
         fibonacci_numbers.append(last_fibonacci_number)
         n += 1
         last_fibonacci_number = fibonacci_numbers[n - 1] + fibonacci_numbers[n - 2]
-
+    fibonacci_numbers.append(last_fibonacci_number)
+    n += 1
     a = left_border
     b = right_border
 
