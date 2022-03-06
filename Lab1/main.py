@@ -13,3 +13,6 @@ if __name__ == "__main__":
     a, b, n = methods.golden_ratio(investigated_function, 4, 6, 0.0005)
     print(a, b, n)
 
+    a, b, n = methods.fibonacci(investigated_function, 4, 6, 0.0005)
+    print(a, b, n)
+

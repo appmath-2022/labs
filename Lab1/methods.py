@@ -51,8 +51,69 @@ def golden_ratio(function, left_border, right_border, error):
 
         iteration_counter += 1
 
-    return [a, b, iteration_counter]
+    return a, b, iteration_counter
 
 
 def fibonacci(function, left_border, right_border, error):
-    return NotImplementedError
+    fibonacci_numbers = [0, 1]
+    last_fibonacci_number = 1
+    n = 2
+    while last_fibonacci_number < (right_border - left_border) / error:
+        fibonacci_numbers.append(last_fibonacci_number)
+        n += 1
+        last_fibonacci_number = fibonacci_numbers[n - 1] + fibonacci_numbers[n - 2]
+
+    a = left_border
+    b = right_border
+
+    d = error / 2
+
+    x1 = a + fibonacci_numbers[n - 3] / fibonacci_numbers[n - 1] * (b - a)
+    x2 = a + fibonacci_numbers[n - 2] / fibonacci_numbers[n - 1] * (b - a)
+
+    first_value = function(x1)
+    second_value = function(x2)
+
+    k = 1
+
+    while k != n:
+        if first_value > second_value:
+            a = x1
+            x1 = x2
+            x2 = a + fibonacci_numbers[n - 2 - k]/fibonacci_numbers[n - k - 1] * (b - a)
+            first_value = second_value
+            second_value = function(x2)
+
+            if k == n - 2:
+                x2 = x1 + d
+                first_value = function(x1)
+                second_value = function(x2)
+
+                if first_value > second_value:
+                    a = x1
+                else:
+                    b = x1
+                break
+            else:
+                k += 1
+        else:
+            b = x2
+            x2 = x1
+            x1 = a + fibonacci_numbers[n - k - 3] / fibonacci_numbers[n - k - 1] * (b - a)
+            second_value = first_value
+            first_value = function(x1)
+
+            if k == n - 2:
+                x2 = x1 + d
+                first_value = function(x1)
+                second_value = function(x2)
+
+                if first_value > second_value:
+                    a = x1
+                else:
+                    b = x1
+                break
+            else:
+                k += 1
+    return a, b, k
+
