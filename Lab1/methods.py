@@ -81,7 +81,7 @@ def fibonacci(function, left_border, right_border, error):
         if first_value > second_value:
             a = x1
             x1 = x2
-            x2 = a + fibonacci_numbers[n - 2 - k]/fibonacci_numbers[n - k - 1] * (b - a)
+            x2 = a + fibonacci_numbers[n - 2 - k] / fibonacci_numbers[n - k - 1] * (b - a)
             first_value = second_value
             second_value = function(x2)
 
@@ -168,10 +168,11 @@ def brent(function, left_border, right_border, error):
             f1 = function(x1)
             f2 = function(x2)
             f3 = function(x3)
-            u_temp = x2 - ((x2 - x1) * (x2 - x1) * (f2 - f3) - (x2 - x3) * (x2 - x3) * (f2 - f1)) / (2 * ((x2 - x1) * (f2 - f3) - (x2 - x3) * (f2 - f1)))
-        if a + error <= u_temp <= c - error and abs(u_temp - x) < g/2:
+            u_temp = x2 - ((x2 - x1) * (x2 - x1) * (f2 - f3) - (x2 - x3) * (x2 - x3) * (f2 - f1)) / (
+                    2 * ((x2 - x1) * (f2 - f3) - (x2 - x3) * (f2 - f1)))
+        if a + error <= u_temp <= c - error and abs(u_temp - x) < g / 2:
             u = u_temp
-            d = abs(u-x)
+            d = abs(u - x)
         else:
             if x < (c + a) / 2:
                 u = x + phi * (c - x)
