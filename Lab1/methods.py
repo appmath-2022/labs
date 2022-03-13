@@ -1,4 +1,4 @@
-from math import sqrt
+from math import sqrt, copysign
 
 
 def dichotomy(function, left_border, right_border, error):
@@ -144,3 +144,64 @@ def parabola(function, left_border, right_border, error):
 
     return x1, x3, iteration_counter
 
+
+def brent(function, left_border, right_border, error):
+    a = left_border
+    c = right_border
+    phi = (3 - sqrt(5)) / 2
+    x = w = v = (a + c) / 2
+    fx = fw = fv = function(x)
+    d = e = c - a
+    iteration_counter = 0
+    number_digits_after_comma = len(str(error).split('.')[1]) + 1
+    while round(abs(c - a), number_digits_after_comma) > error:
+        iteration_counter += 1
+        g = e
+        e = d
+        u_temp = c
+        if x != w and fx != fw and x != v and fx != fv and v != w and fv != fw:
+            temp = [x, v, w]
+            temp.sort()
+            x1 = temp[0]
+            x2 = temp[1]
+            x3 = temp[2]
+            f1 = function(x1)
+            f2 = function(x2)
+            f3 = function(x3)
+            u_temp = x2 - ((x2 - x1) * (x2 - x1) * (f2 - f3) - (x2 - x3) * (x2 - x3) * (f2 - f1)) / (2 * ((x2 - x1) * (f2 - f3) - (x2 - x3) * (f2 - f1)))
+        if a + error <= u_temp <= c - error and abs(u_temp - x) < g/2:
+            u = u_temp
+            d = abs(u-x)
+        else:
+            if x < (c + a) / 2:
+                u = x + phi * (c - x)
+                d = c - x
+            else:
+                u = x - phi * (x - a)
+                d = x - a
+        fu = function(u)
+        if fu <= fx:
+            if u >= x:
+                a = x
+            else:
+                c = x
+            v = w
+            w = x
+            x = u
+            fv = fw
+            fw = fx
+            fx = fu
+        else:
+            if u >= x:
+                c = u
+            else:
+                a = u
+            if fu <= fw or w == x:
+                v = w
+                w = u
+                fv = fw
+                fw = fu
+            elif fu <= fv or v == x or v == w:
+                v = u
+                fv = fu
+    return a, c, iteration_counter
