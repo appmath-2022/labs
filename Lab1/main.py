@@ -23,3 +23,7 @@ if __name__ == "__main__":
     print(a, b, n)
     print(a - b)
 
+    a, b, n = methods.brent(investigated_function, 4, 6, 0.0005)
+    print(a, b, n)
+    print(a - b)
+
