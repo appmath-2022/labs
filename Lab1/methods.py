@@ -5,7 +5,8 @@ def dichotomy(function, left_border, right_border, error):
     a = left_border
     b = right_border
     iteration_counter = 0
-    number_digits_after_comma = len(str(error).split('.')[1]) + 1  # количество знаков после запятой
+    number_digits_after_comma = len(error.split('.')[1]) + 1  # количество знаков после запятой
+    error = float(error)
 
     while round(abs(b - a), number_digits_after_comma) > error:
         x1 = (a + b) / 2.0 - error / 2.0
@@ -25,8 +26,8 @@ def golden_ratio(function, left_border, right_border, error):
     a = left_border
     b = right_border
     iteration_counter = 0
-    number_digits_after_comma = len(str(error).split('.')[1]) + 1  # количество знаков после запятой
-
+    number_digits_after_comma = len(error.split('.')[1]) + 1  # количество знаков после запятой
+    error = float(error)
     phi = (3 - sqrt(5)) / 2
 
     x1 = a + phi * (b - a)
@@ -55,6 +56,7 @@ def golden_ratio(function, left_border, right_border, error):
 
 
 def fibonacci(function, left_border, right_border, error):
+    error = float(error)
     fibonacci_numbers = [0, 1]
     last_fibonacci_number = 1
     n = 2
@@ -123,7 +125,8 @@ def parabola(function, left_border, right_border, error):
     x1 = left_border
     x3 = right_border
     iteration_counter = 0
-    number_digits_after_comma = len(str(error).split('.')[1]) + 1  # количество знаков после запятой
+    number_digits_after_comma = len(error.split('.')[1]) + 1  # количество знаков после запятой
+    error = float(error)
 
     while round(abs(x3 - x1), number_digits_after_comma) > error:
 
@@ -153,7 +156,8 @@ def brent(function, left_border, right_border, error):
     fx = fw = fv = function(x)
     d = e = c - a
     iteration_counter = 0
-    number_digits_after_comma = len(str(error).split('.')[1]) + 1
+    number_digits_after_comma = len(error.split('.')[1]) + 1  # количество знаков после запятой
+    error = float(error)
     while round(abs(c - a), number_digits_after_comma) > error:
         iteration_counter += 1
         g = e

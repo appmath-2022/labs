@@ -7,23 +7,23 @@ def investigated_function(x):
 
 
 if __name__ == "__main__":
-    a, b, n = methods.dichotomy(investigated_function, 4, 6, 0.0005)
+    a, b, n = methods.dichotomy(investigated_function, 4, 6, '0.00000005')
     print(a, b, n)
     print(a-b)
 
-    a, b, n = methods.golden_ratio(investigated_function, 4, 6, 0.0005)
+    a, b, n = methods.golden_ratio(investigated_function, 4, 6, '0.0005')
     print(a, b, n)
     print(a-b)
 
-    a, b, n = methods.fibonacci(investigated_function, 4, 6, 0.0005)
+    a, b, n = methods.fibonacci(investigated_function, 4, 6, '0.0005')
     print(a, b, n)
     print(a-b)
 
-    a, b, n = methods.parabola(investigated_function, 4, 6, 0.0005)
+    a, b, n = methods.parabola(investigated_function, 4, 6, '0.0005')
     print(a, b, n)
     print(a - b)
 
-    a, b, n = methods.brent(investigated_function, 4, 6, 0.0005)
+    a, b, n = methods.brent(investigated_function, 4, 6, '0.0005')
     print(a, b, n)
     print(a - b)
 
