@@ -164,14 +164,8 @@ def brent(function, left_border, right_border, error):
         e = d
         u_temp = c
         if x != w and fx != fw and x != v and fx != fv and v != w and fv != fw:
-            temp = [x, v, w]
-            temp.sort()
-            x1 = temp[0]
-            x2 = temp[1]
-            x3 = temp[2]
-            f1 = function(x1)
-            f2 = function(x2)
-            f3 = function(x3)
+            x1, x2, x3 = v, x, w
+            f1, f2, f3 = fv, fx, fw
             u_temp = x2 - ((x2 - x1) * (x2 - x1) * (f2 - f3) - (x2 - x3) * (x2 - x3) * (f2 - f1)) / (
                     2 * ((x2 - x1) * (f2 - f3) - (x2 - x3) * (f2 - f1)))
         if a + error <= u_temp <= c - error and abs(u_temp - x) < g / 2:
