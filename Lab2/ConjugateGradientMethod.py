@@ -7,7 +7,7 @@ def proceed(gradient, function, error, x, x_previous, minimization_method, extre
     counter = 0
     track = []
 
-    while np.linalg.norm(x - x_previous) > error:
+    while abs(function(x) - function(x_previous)) > error:
         counter += 1
         direction = (-gradient(x) + beta * direction) / np.linalg.norm(-gradient(x) + beta * direction)
 
