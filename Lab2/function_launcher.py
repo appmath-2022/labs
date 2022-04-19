@@ -1,4 +1,4 @@
-from GradientDescent import GradientDescent
+from GradientDescent import gradient_descent
 import StepFunctions as Sf
 
 
@@ -11,10 +11,10 @@ def gradient(x):
 
 
 if __name__ == '__main__':
-    print(GradientDescent([10, 10], function1, gradient, 0.00001, Sf.ConstStep))
-    #
-    # print(GradientDescent([10, 10], function1, gradient, 0.00001, Sf.StepSplit))
-    #
-    # print(GradientDescent([10, 10], function1, gradient, 0.00001, Sf.GoldenRatio))
+    print(gradient_descent([10, 10], function1, gradient, 0.00001, Sf.const_step))
 
-    print(GradientDescent([10, 10], function1, gradient, 0.00001, Sf.Fibonacci))
+    print(gradient_descent([10, 10], function1, gradient, 0.00001, Sf.step_split))
+
+    print(gradient_descent([10, 10], function1, gradient, 0.00001, Sf.golden_ratio))
+
+    print(gradient_descent([10, 10], function1, gradient, 0.00001, Sf.fibonacci))

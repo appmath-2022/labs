@@ -1,4 +1,4 @@
-def GradientDescent(x, f, d, accuracy, step):
+def gradient_descent(x, f, d, accuracy, step):
     iteration = 0
     prev_x = [i + 1 for i in x]  # + 2 * accuracy
     a = 0
