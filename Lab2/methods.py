@@ -80,7 +80,6 @@ def fibonacci(function, left_border, right_border, error):
     second_value = function(x2)
 
     k = 1
-
     while k != n:
         if first_value > second_value:
             a = x1
@@ -89,7 +88,7 @@ def fibonacci(function, left_border, right_border, error):
             first_value = second_value
             second_value = function(x2)
 
-            if k == n - 2:
+            if k == n - 3:
                 x2 = x1 + d
                 first_value = function(x1)
                 second_value = function(x2)
@@ -108,7 +107,7 @@ def fibonacci(function, left_border, right_border, error):
             second_value = first_value
             first_value = function(x1)
 
-            if k == n - 2:
+            if k == n - 3:
                 x2 = x1 + d
                 first_value = function(x1)
                 second_value = function(x2)
@@ -121,6 +120,10 @@ def fibonacci(function, left_border, right_border, error):
             else:
                 k += 1
     return a, b, k
+
+
+
+
 
 
 def parabola(function, left_border, right_border, error):

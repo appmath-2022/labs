@@ -1,6 +1,6 @@
 def GradientDescent(x, f, d, accuracy, step):
     iteration = 0
-    prev_x = [i+1 for i in x] #+ 2 * accuracy
+    prev_x = [i + 1 for i in x]  # + 2 * accuracy
     a = 0
     trajectory = [x]
     while abs(f(x) - f(prev_x)) >= accuracy:
