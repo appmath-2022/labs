@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class SimpleParabola:
+class UnrealSimpleParabola:
     x = np.array([10, 10])
     x_previous = np.array([100, 100])
     x_axe = np.meshgrid(-10, 10, 0.1)
@@ -11,11 +11,11 @@ class SimpleParabola:
 
     @staticmethod
     def gradient(argument_list):
-        return np.array([2 * argument_list[0], 4 * argument_list[1]])
+        return np.array([2 * argument_list[0] - 10, 0])
 
     @staticmethod
     def function(argument_list):
-        return argument_list[0] ** 2 + 2 * argument_list[1] ** 2
+        return (argument_list[0] - 5) ** 2
 
 
 class AnotherSimpleParabola:

@@ -25,6 +25,7 @@ def decoration_output(res):
     previous_coords = [1 for i in range(len(res[2]))]
     counter = 1
     arr = []
+    arr_for_plot.append(res[2])
     for i in res[2]:
         relation = abs(np.mean([i[j] / previous_coords[j] for j in range(len(i))]))
         previous_coords = i
@@ -36,8 +37,10 @@ def decoration_output(res):
 
 
 funct_obj = tf.AnotherSimpleParabola
+fig, axes = plt.subplots(nrows=1, ncols=2)
+arr_for_plot = []
 
-print("Пункт 1 - 2. Сравнение скорости сходимости метода в зависимости от метода поиска величины шага")
+print("Сравнение скорости сходимости метода в зависимости от метода поиска величины шага")
 print("-----------------------------------------------------")
 print("Постоянная величина шага")
 result = gd.gradient_descent([10, 10], funct_obj.function, funct_obj.gradient, 0.00001, sf.const_step)
@@ -57,15 +60,23 @@ decoration_output(result)
 
 print("-----------------------------------------------------")
 
-print("Пункт 5 - 6. Сравнение методов сопряженных градиентов и градиентного спуска")
-func_obj = tf.SimpleParabola
+axes[0].contour(*funct_obj.args,
+                funct_obj.function(funct_obj.args), 10)
+axes[0].plot(*np.array(arr_for_plot[0]).T, label='Постоянная величина шага')
+axes[0].plot(*np.array(arr_for_plot[1]).T, label='Дробление шага')
+axes[0].plot(*np.array(arr_for_plot[2]).T, label='Золотое сечение')
+axes[0].plot(*np.array(arr_for_plot[3]).T, label='Фибоначчи')
+axes[0].legend()
+axes[0].set_title("Пункт 1 - 2. Сравнение скорости сходимости метода в зависимости от метода поиска величины шага")
+
+print("Сравнение методов сопряженных градиентов и градиентного спуска")
 result, number_of_iterations = cg.proceed(
-    gradient=func_obj.gradient,
-    function=func_obj.function,
+    gradient=funct_obj.gradient,
+    function=funct_obj.function,
     error=0.0005,
     minimization_method=m.golden_ratio,
-    x=func_obj.x,
-    x_previous=func_obj.x_previous,
+    x=funct_obj.x,
+    x_previous=funct_obj.x_previous,
     extrema_finding_function=sliding_window_method
 )
 print("-----------------------------------------------------")
@@ -73,25 +84,25 @@ print("-----------------------------------------------------")
 minimum_coords = result[len(result) - 1]
 print("Метод сопряженных градиентов")
 print(f"Координаты точки минимума {minimum_coords}")
-print(f"Минимальное значение функции: {func_obj.function(minimum_coords)}")
+print(f"Минимальное значение функции: {funct_obj.function(minimum_coords)}")
 print(f"Количество итераций: {number_of_iterations}")
-fig, axes = plt.subplots(nrows=1, ncols=1)
 
-axes.contour(*func_obj.args,
-             func_obj.function(func_obj.args), 10)
-axes.plot(*np.array(result).T, label='Метод сопряженных градиентов')
+axes[1].contour(*funct_obj.args,
+                funct_obj.function(funct_obj.args), 10)
+axes[1].plot(*np.array(result).T, label='Метод сопряженных градиентов')
 
-minimum_coords, iteration_number, result = gd.gradient_descent(func_obj.x,
-                                                               func_obj.function,
-                                                               func_obj.gradient,
+minimum_coords, iteration_number, result = gd.gradient_descent(funct_obj.x,
+                                                               funct_obj.function,
+                                                               funct_obj.gradient,
                                                                0.0005,
                                                                sf.golden_ratio
                                                                )
 print("-----------------------------------------------------")
 print("Метод градиентного спуска")
 print(f"Координаты точки минимума {minimum_coords}")
-print(f"Минимальное значение функции: {func_obj.function(minimum_coords)}")
+print(f"Минимальное значение функции: {funct_obj.function(minimum_coords)}")
 print(f"Количество итераций: {number_of_iterations}")
-axes.plot(*np.array(result).T, label='Метод градиентного спуска')
-axes.legend()
+axes[1].plot(*np.array(result).T, label='Метод градиентного спуска')
+axes[1].set_title("Пункт 5 - 6. Сравнение методов сопряженных градиентов и градиентного спуска")
+axes[1].legend()
 plt.show()
