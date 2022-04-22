@@ -67,9 +67,9 @@ axes[0].plot(*np.array(arr_for_plot[1]).T, label='Дробление шага')
 axes[0].plot(*np.array(arr_for_plot[2]).T, label='Золотое сечение')
 axes[0].plot(*np.array(arr_for_plot[3]).T, label='Фибоначчи')
 axes[0].legend()
-axes[0].set_title("Пункт 1 - 2. Сравнение скорости сходимости метода в зависимости от метода поиска величины шага")
+axes[0].set_title("Сравнение скорости сходимости метода в зависимости от метода поиска величины шага")
 
-print("Сравнение методов сопряженных градиентов и градиентного спуска")
+print("Пункт 1 - 2. Сравнение методов сопряженных градиентов и градиентного спуска")
 result, number_of_iterations = cg.proceed(
     gradient=funct_obj.gradient,
     function=funct_obj.function,
