@@ -36,7 +36,7 @@ def decoration_output(res):
     print()
 
 
-funct_obj = tf.AnotherSimpleParabola
+funct_obj = tf.function2
 fig, axes = plt.subplots(nrows=2, ncols=2)
 arr_for_plot = []
 
@@ -92,12 +92,13 @@ print("Метод сопряженных градиентов")
 print(f"Координаты точки минимума {minimum_coords}")
 print(f"Минимальное значение функции: {funct_obj.function(minimum_coords)}")
 print(f"Количество итераций: {number_of_iterations}")
-#
-# axes[1].contour(*funct_obj.args,
-#                 funct_obj.function(funct_obj.args), 10)
-# axes[1].plot(*np.array(result).T, label='Метод сопряженных градиентов')
+fig, axes = plt.subplots(nrows=1, ncols=1)
 
-minimum_coords, iteration_number, result = gd.gradient_descent(funct_obj.x,
+axes.contour(*funct_obj.args,
+                funct_obj.function(funct_obj.args), 10)
+axes.plot(*np.array(result).T, label='Метод сопряженных градиентов')
+
+minimum_coords, number_of_iterations, result = gd.gradient_descent(funct_obj.x,
                                                                funct_obj.function,
                                                                funct_obj.gradient,
                                                                0.0005,
@@ -108,7 +109,7 @@ print("Метод градиентного спуска")
 print(f"Координаты точки минимума {minimum_coords}")
 print(f"Минимальное значение функции: {funct_obj.function(minimum_coords)}")
 print(f"Количество итераций: {number_of_iterations}")
-# axes[1].plot(*np.array(result).T, label='Метод градиентного спуска')
-# axes[1].set_title("Сравнение методов сопряженных градиентов и градиентного спуска")
-# axes[1].legend()
+axes.plot(*np.array(result).T, label='Метод градиентного спуска')
+axes.set_title("Сравнение методов сопряженных градиентов и градиентного спуска")
+axes.legend()
 plt.show()
