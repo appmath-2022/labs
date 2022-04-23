@@ -36,7 +36,8 @@ def decoration_output(res):
     print()
 
 
-funct_obj = tf.AnotherSimpleParabola
+#funct_obj = tf.AnotherSimpleParabola
+funct_obj = tf.function3
 fig, axes = plt.subplots(nrows=2, ncols=2)
 arr_for_plot = []
 
