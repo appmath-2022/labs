@@ -34,6 +34,21 @@ class AnotherSimpleParabola:
     def function(argument_list):
         return argument_list[0] ** 2 + 2 * argument_list[1] ** 2
 
+class function2:
+    x = np.array([10, 10])
+    x_previous = np.array([100, 100])
+    x_axe = np.meshgrid(-10, 10, 0.01)
+    y_axe = np.meshgrid(-10, 10, 0.01)
+    args = np.meshgrid(np.arange(-10, 10, 0.01), np.arange(-10, 10, 0.01))
+
+    @staticmethod
+    def gradient(argument_list):
+        return np.array([2 * argument_list[0], 4 * argument_list[1]])
+
+    @staticmethod
+    def function(argument_list):
+        return argument_list[0] ** 2 + 2 * argument_list[1] ** 2
+
 
 class function1:
     x = np.array([1, 1])
@@ -52,11 +67,11 @@ class function1:
 
 
 class function2:
-    x = np.array([10, 10])
+    x = np.array([-4.5, 45])
     x_previous = np.array([100, 100])
-    x_axe = np.meshgrid(-10, 10, 0.01)
-    y_axe = np.meshgrid(-10, 10, 0.01)
-    args = np.meshgrid(np.arange(-10, 10, 0.01), np.arange(-10, 10, 0.01))
+    x_axe = np.meshgrid(-45, 45, 0.1)
+    y_axe = np.meshgrid(-45, 45, 0.1)
+    args = np.meshgrid(np.arange(-45, 45, 0.1), np.arange(-45, 45, 0.1))
 
     @staticmethod
     def gradient(argument_list):
