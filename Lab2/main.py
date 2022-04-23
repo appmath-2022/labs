@@ -43,19 +43,19 @@ arr_for_plot = []
 print("Сравнение скорости сходимости метода в зависимости от метода поиска величины шага")
 print("-----------------------------------------------------")
 print("Постоянная величина шага")
-result = gd.gradient_descent([10, 10], funct_obj.function, funct_obj.gradient, 0.00001, sf.const_step)
+result = gd.gradient_descent(funct_obj.x, funct_obj.function, funct_obj.gradient, 0.00001, sf.const_step)
 decoration_output(result)
 
 print("Дробление шага")
-result = gd.gradient_descent([10, 10], funct_obj.function, funct_obj.gradient, 0.00001, sf.step_split)
+result = gd.gradient_descent(funct_obj.x, funct_obj.function, funct_obj.gradient, 0.00001, sf.step_split)
 decoration_output(result)
 
 print("Золотое сечение")
-result = gd.gradient_descent([10, 10], funct_obj.function, funct_obj.gradient, 0.00001, sf.golden_ratio)
+result = gd.gradient_descent(funct_obj.x, funct_obj.function, funct_obj.gradient, 0.00001, sf.golden_ratio)
 decoration_output(result)
 
 print("Фибоначчи")
-result = gd.gradient_descent([10, 10], funct_obj.function, funct_obj.gradient, 0.00001, sf.fibonacci)
+result = gd.gradient_descent(funct_obj.x, funct_obj.function, funct_obj.gradient, 0.00001, sf.fibonacci)
 decoration_output(result)
 
 print("-----------------------------------------------------")
@@ -66,13 +66,13 @@ for axe in axes:
 axes[0][0].plot(*np.array(arr_for_plot[0]).T)
 axes[0][0].set_title("Постоянная величина шага")
 axes[1][0].plot(*np.array(arr_for_plot[1]).T, label='Дробление шага')
-axes[1][0].set_title("Постоянная величина шага")
+axes[1][0].set_title("Дробление шага")
 
 axes[0][1].plot(*np.array(arr_for_plot[2]).T, label='Золотое сечение')
-axes[0][1].set_title("Постоянная величина шага")
+axes[0][1].set_title("Золотое сечение")
 
 axes[1][1].plot(*np.array(arr_for_plot[3]).T, label='Фибоначчи')
-axes[1][1].set_title("Постоянная величина шага")
+axes[1][1].set_title("Фибонначи")
 
 
 print("Пункт 1 - 2. Сравнение методов сопряженных градиентов и градиентного спуска")
