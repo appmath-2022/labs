@@ -2,6 +2,7 @@ import numpy as np
 import scipy.sparse as sp
 from decompositionLU import decompositionLU
 from solutions import solve, reverse, jacobi
+from matrixBuild import HilbertМatrix
 
 
 def initialize_test_matrix():  # разреженно-строчный формат
