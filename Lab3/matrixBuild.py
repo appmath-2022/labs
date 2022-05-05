@@ -1,10 +1,12 @@
 import numpy as np
 
 def HilbertМatrix(k):
+
     matrix = [[(1 / (i + j + 1)) for i in range(k)] for j in range(k)]
     return matrix
 
 def matrixWithDiagonalDominance(k):
+
     matrix = np.random.randint(100, size=(k, k))
 
     for i in range(k):
@@ -12,4 +14,12 @@ def matrixWithDiagonalDominance(k):
             if (i != j):
                 a = matrix[i][i] / k
                 matrix[i][j] = np.random.randint(-a, a)
+
     return matrix
+
+def matrixF(k, matrix):
+
+    x = np.arange(k)
+    x = [i + 1 for i in x]
+    F = matrix.dot(x)
+    return F

@@ -2,7 +2,7 @@ import numpy as np
 import scipy.sparse as sp
 from decompositionLU import decompositionLU
 from solutions import solve, reverse, jacobi
-from matrixBuild import HilbertМatrix, matrixWithDiagonalDominance
+from matrixBuild import HilbertМatrix, matrixWithDiagonalDominance, matrixF
 
 
 def initialize_test_matrix():  # разреженно-строчный формат
@@ -35,3 +35,11 @@ if __name__ == '__main__':
     x, iter = jacobi(test, test_ans, n, 0.0001)
     if np.array_equal(np.around(test * x - test_ans, 3), np.zeros([3, 1])):
         print("solved correctly in", iter, "iterations")
+
+    k = 3
+    matrixA = matrixWithDiagonalDominance(k)
+    print("matrix A")
+    print(matrixA)
+    matrixF = matrixF(k, matrixA)
+    print("matrix F")
+    print(matrixF)
