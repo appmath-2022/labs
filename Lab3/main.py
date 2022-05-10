@@ -1,8 +1,12 @@
+import datetime
+
 import numpy as np
 import scipy.sparse as sp
-from decompositionLU import decompositionLU
+from decompositionLU import decomposition_lu
 from solutions import solve, reverse, jacobi
-from matrixBuild import HilbertМatrix, matrixWithDiagonalDominance, matrixF
+from math import sqrt
+from matrixBuild import \
+    hilbert_matrix, matrix_with_diagonal_dominance, matrix_f
 
 
 def initialize_test_matrix():  # разреженно-строчный формат
@@ -18,7 +22,7 @@ if __name__ == '__main__':
     # lu test
     b = sp.rand(n, n, 1).multiply(
         10 ** 6).floor()  # Генерирует рандомную матрицу. Первые 2 элементы размеры, 3 плотность
-    l, u = decompositionLU(b)
+    l, u = decomposition_lu(b)
     if np.array_equal(np.around(l * u - b, 3), np.zeros([n, n])):
         print("lu found correctly")
     # solver test
@@ -32,14 +36,112 @@ if __name__ == '__main__':
     # iteration solver test
     test = np.matrix([[8, -3, 2], [4, 11, -1], [6, 3, 12]])
     test_ans = np.matrix([[20], [33], [36]])
-    x, iter = jacobi(test, test_ans, n, 0.0001)
+    rand_ans = sp.rand(n, n, 1).multiply(
+        10 ** 6).floor()
+    x, iteration_number = jacobi(test, test_ans, n, 0.0001)
     if np.array_equal(np.around(test * x - test_ans, 3), np.zeros([3, 1])):
-        print("solved correctly in", iter, "iterations")
+        print("solved correctly in", iteration_number, "iterations")
+    else:
+        print("solved incorrectly")
+    iteration_limit = 100
+    for n in [10, 50, 100, 500,1000]:
+        for i in [1000]:
 
-    k = 3
-    matrixA = matrixWithDiagonalDominance(k)
-    print("matrix A")
-    print(matrixA)
-    matrixF = matrixF(k, matrixA)
-    print("matrix F")
-    print(matrixF)
+            print(f"k = {i}")
+            matrixA = matrix_with_diagonal_dominance(i, n)
+            matrixF = matrix_f(n, matrixA)
+
+            # print("matrix built")
+            print(f"Число обусловленности: {np.linalg.cond(matrixA)}")
+            isnorm = True
+            for j in range(n):
+                summ = 0
+                for z in range(n):
+                    if z != j:
+                        summ += abs(matrixA[j][z])
+                if abs(matrixA[j][j]) < summ:
+                    isnorm = False
+            print(isnorm)
+
+            # true_result = solve(matrixA, matrixF)
+
+            result, iteration_number = jacobi(matrixA, matrixF, iteration_limit, 0.001)
+
+            eq = matrixA * result - matrixF
+
+            error = sqrt(sum([e ** 2 for e in eq]))
+            print(f"Погрешность {error}")
+
+
+            if np.array_equal(np.round(eq, 3), np.zeros([n, 1])):
+                print(f"SOLVED in {iteration_number}")
+
+
+
+            # eq = np.around(matrixA * true_result - matrixF, 3)
+            #
+            # if np.array_equal(eq, np.zeros([i, 1])):
+            #     print(f"SOLVED")
+
+
+            print("-------------------------------------------------")
+
+    # for n in [10, 50, 100, 500, 1000]:
+    #     print(f"n = {n}")
+    #     matrixA = hilbert_matrix(n)
+    #     matrixF = matrix_f(n, matrixA)
+    #
+    #     print(f"Число обусловленности: {np.linalg.cond(matrixA)}")
+    #     isnorm = True
+    #     for j in range(n):
+    #         summ = 0
+    #         for z in range(n):
+    #             if z != j:
+    #                 summ += abs(matrixA[j, z])
+    #         if abs(matrixA[j, j]) < summ:
+    #             isnorm = False
+    #     print(isnorm)
+    #
+    #     true_result = solve(matrixA, matrixF)
+    #
+    #     result, iteration_number = jacobi(matrixA, matrixF, iteration_limit, 0.001)
+    #
+    #     eq = matrixA * result - matrixF
+    #
+    #     error = sqrt(sum([e ** 2 for e in eq]))
+    #     print(f"Погрешность {error}")
+    #
+    #     if np.array_equal(np.round(eq, 3), np.zeros([n, 1])):
+    #         print(f"SOLVED in {iteration_number}")
+    #
+    #
+    #     eq = np.around(matrixA * true_result - matrixF, 3)
+    #
+    #     if np.array_equal(eq, np.zeros([n, 1])):
+    #         print(f"SOLVED")
+    #
+    #     print("-------------------------------------------------")
+
+    for n in [10, 50, 100, 500, 1000, 10 ** 4]:
+        print(f"n = {n}")
+        matrixA = matrix_with_diagonal_dominance(100, n)
+        matrixF = matrix_f(n, matrixA)
+        timer = datetime.datetime.now()
+        true_result = solve(matrixA, matrixF)
+        print(datetime.datetime.now() - timer)
+        timer = datetime.datetime.now()
+
+        result, iteration_number = jacobi(matrixA, matrixF, iteration_limit, 0.0001)
+        print(datetime.datetime.now() - timer)
+
+        eq = matrixA * result - matrixF
+
+        if np.array_equal(np.round(eq, 1), np.zeros([n, 1])):
+            print(f"SOLVED in {iteration_number}")
+
+        eq = np.around(matrixA * true_result - matrixF, 3)
+
+        if np.array_equal(eq, np.zeros([n, 1])):
+            print(f"SOLVED")
+
+        print("-------------------------------------------------")

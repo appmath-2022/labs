@@ -1,10 +1,8 @@
-import sys
 import numpy as np
 
 
-def decompositionLU(a):
+def decomposition_lu(a: np.matrix):
     if 0 in a.diagonal():
-        print("main diagonal contains zero elements", file=sys.stderr)
         return 0, 0
 
     n = a.shape[0]
