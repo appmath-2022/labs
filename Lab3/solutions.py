@@ -1,5 +1,5 @@
 import numpy as np
-from decompositionLU import decomposition_lu
+from decomposition_lu import decomposition_lu
 
 
 def solve(a, ans):
@@ -50,9 +50,10 @@ def jacobi(a, ans, max_iterations, accuracy):
         nx = -np.divide(nx, d)
         current_error = max(abs(x - nx))
         if current_error < accuracy:
-
             return nx, iteration
         x = nx
     print("iteration limit")
     print(current_error)
     return x, iteration
+
+

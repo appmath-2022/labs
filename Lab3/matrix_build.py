@@ -25,3 +25,4 @@ def matrix_f(n, matrix):
     x = np.arange(n)
     x = [[i + 1] for i in x]
     return matrix.dot(x)  # Возвращает матрицу F из условия
+
