@@ -7,17 +7,29 @@ def hilbert_matrix(k):
 
 
 def matrix_with_diagonal_dominance(k, n):
-    matrix = np.random.uniform(-100, 100, size=(n, n))
+    matrix = np.random.uniform(-n ** 3, n ** 3, size=(n, n))
     for i in range(n):
         if matrix[i][i] == 0:
-            matrix[i][i] = n
+            matrix[i][i] = np.random.randint(1, n ** 3)
 
     for i in range(n):
         for j in range(n):
             if i != j:
-                matrix[i][j] = matrix[i][i] / (k * 1.0) * np.random.randint(-n, n + 1)
-        matrix[i][i] *= n ** 2
+                matrix[i][j] = matrix[i][i] / (k * 1.0) * np.random.randint(-n ** 2, n ** 2 + 1)
+        matrix[i][i] *= k ** 2
 
+    return matrix
+
+
+def random_tridiagonal_matrix(n):
+    matrix = np.random.uniform(-n ** 3, n ** 3, size=(n, n))
+
+    for i in range(n):
+        for j in range(n):
+            if j > i + 1 or j < i - 1:
+                matrix[i][j] = 0
+            if j == i - 1 or j == i + 1:
+                matrix[i][j] /= n **2
     return matrix
 
 

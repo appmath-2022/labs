@@ -44,16 +44,28 @@ def jacobi(a, ans, max_iterations, accuracy):
 
     x = np.zeros([n, 1])
     iteration = 0
+    current_error = -1
     while iteration < max_iterations:
         iteration += 1
         nx = a * x - np.multiply(d, x) - ans
         nx = -np.divide(nx, d)
         current_error = max(abs(x - nx))
         if current_error < accuracy:
+            print(f"Погрешность {current_error}")
             return nx, iteration
         x = nx
     print("iteration limit")
-    print(current_error)
+    print(f"Погрешность {current_error}")
     return x, iteration
 
+
+def equivalent_matrix_builder(matrix: np.matrix):
+    equivalent_matrix = matrix.copy()
+    for i in range(equivalent_matrix.shape[0]):
+        for j in range(equivalent_matrix.shape[0]):
+            if i != j:
+                equivalent_matrix[i][j] /= -equivalent_matrix[i][i]
+        equivalent_matrix[i][i] = 0
+
+    return equivalent_matrix
 
