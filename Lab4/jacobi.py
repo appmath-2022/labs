@@ -31,14 +31,16 @@ def create_rotation_matrix(matrix, i: int, j: int, n: int) -> ndarray:
 
 
 # работает только на симметрических матрицах потому что методичка
-def find(matrix: ndarray, error: float):
+def find_by_error(matrix: ndarray, error: float):
     rotation_matrix = None
     n = len(matrix)
+    cnt = 0
 
     tmp_matrix = matrix.copy()
     the_collection_of_eigenvectors = np.eye(n)
 
     while quad_sum_of_items_out_diagonal(tmp_matrix) > error:
+        cnt += 1
         max_item = 0
         max_i = -1
         max_j = -1
@@ -57,7 +59,40 @@ def find(matrix: ndarray, error: float):
 
     the_collection_of_eigenvectors = the_collection_of_eigenvectors.T
     the_collection_of_eigenvectors = [[[j] for j in i] for i in the_collection_of_eigenvectors]
-    return tmp_matrix.diagonal(), the_collection_of_eigenvectors
+    return tmp_matrix.diagonal(), the_collection_of_eigenvectors, cnt
+
+
+
+def find_by_iteration_limit(matrix: ndarray, iteration_limit: int):
+    rotation_matrix = None
+    n = len(matrix)
+
+    tmp_matrix = matrix.copy()
+    the_collection_of_eigenvectors = np.eye(n)
+    cnt = 0
+
+    while cnt < iteration_limit:
+        cnt += 1
+        max_item = 0
+        max_i = -1
+        max_j = -1
+        for i in range(n):
+            for j in range(n):
+                if i != j:
+                    if abs(max_item) < abs(tmp_matrix[i][j]):
+                        max_item = tmp_matrix[i][j]
+                        max_i = i
+                        max_j = j
+
+        rotation_matrix = create_rotation_matrix(tmp_matrix, max_i, max_j, n)
+        the_collection_of_eigenvectors = the_collection_of_eigenvectors.dot(rotation_matrix)
+
+        tmp_matrix = rotation_matrix.T.dot(tmp_matrix).dot(rotation_matrix)
+
+    current_error = quad_sum_of_items_out_diagonal(tmp_matrix)
+    the_collection_of_eigenvectors = the_collection_of_eigenvectors.T
+    the_collection_of_eigenvectors = [[[j] for j in i] for i in the_collection_of_eigenvectors]
+    return tmp_matrix.diagonal(), the_collection_of_eigenvectors, current_error
 
 
 
