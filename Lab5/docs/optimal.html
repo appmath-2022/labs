@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module optimal</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>optimal</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-find_main_col"><strong>find_main_col</strong></a>(matrix_d: numpy.ndarray) -&gt; int</dt><dd><tt>Находит&nbsp;разрешающей&nbsp;столбец&nbsp;симплекс-матрицы.<br>
+:param&nbsp;matrix_d:&nbsp;симплекс-матрица<br>
+:return:&nbsp;индекс&nbsp;разрешающего&nbsp;столбца</tt></dd></dl>
+ <dl><dt><a name="-find_main_row"><strong>find_main_row</strong></a>(matrix_d: numpy.ndarray, main_col: int) -&gt; int</dt><dd><tt>Находит&nbsp;разрешающую&nbsp;строку.<br>
+:param&nbsp;matrix_d:&nbsp;симплекс-матрица<br>
+:param&nbsp;main_col:&nbsp;текущий&nbsp;разрешающий&nbsp;столбец<br>
+:return:&nbsp;индекс&nbsp;разрешающей&nbsp;строки<br>
+&nbsp;<br>
+:exception&nbsp;Бросает&nbsp;базовое&nbsp;исключение,&nbsp;если&nbsp;функция&nbsp;не&nbsp;ограничена&nbsp;на&nbsp;заданной&nbsp;области,&nbsp;то&nbsp;есть&nbsp;задача&nbsp;не&nbsp;имеет&nbsp;решений</tt></dd></dl>
+ <dl><dt><a name="-is_end"><strong>is_end</strong></a>(matrix_d: numpy.ndarray) -&gt; bool</dt><dd><tt>Проверяет&nbsp;симплекс-таблицу&nbsp;на&nbsp;оптимальность&nbsp;(поиск&nbsp;минимума)<br>
+:param&nbsp;matrix_d:&nbsp;симплекс-таблица<br>
+:return:&nbsp;True,&nbsp;если&nbsp;план&nbsp;оптимален,&nbsp;False&nbsp;в&nbsp;обратном&nbsp;случае</tt></dd></dl>
+ <dl><dt><a name="-optimize"><strong>optimize</strong></a>(matrix_b: list, matrix_d: numpy.ndarray) -&gt; (&lt;class 'numpy.ndarray'&gt;, &lt;class 'numpy.ndarray'&gt;)</dt><dd><tt>Находит&nbsp;оптимальный&nbsp;план&nbsp;по&nbsp;опорному<br>
+:param&nbsp;matrix_b:&nbsp;Базис&nbsp;после&nbsp;поиска&nbsp;опорного&nbsp;плана.<br>
+:param&nbsp;matrix_d:&nbsp;Симплекс-таблица<br>
+:return:&nbsp;Решенная&nbsp;симплекс-таблица,&nbsp;оптимальный&nbsp;план</tt></dd></dl>
+</td></tr></table>
+</body></html>

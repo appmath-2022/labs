@@ -1,12 +1,18 @@
 import numpy as np
 
 
-def solve(matrix_b, matrix_d):
+def optimize(matrix_b: list, matrix_d: np.ndarray) -> (np.ndarray, np.ndarray):
+    """
+    Находит оптимальный план по опорному
+    :param matrix_b: Базис после поиска опорного плана.
+    :param matrix_d: Симплекс-таблица
+    :return: Решенная симплекс-таблица, оптимальный план
+    """
     n = matrix_d.shape[1]
     m = matrix_d.shape[0]
-    while not is_end(matrix_d, n, m):
-        main_col = find_main_col(matrix_d, n, m)
-        main_row = find_main_row(matrix_d, main_col, m)
+    while not is_end(matrix_d):
+        main_col = find_main_col(matrix_d)
+        main_row = find_main_row(matrix_d, main_col)
         matrix_b[main_row] = main_col
         new_table = np.zeros((m, n))
         for i in range(n):
@@ -24,31 +30,46 @@ def solve(matrix_b, matrix_d):
     return matrix_d, result
 
 
-# все коэффициенты должны стать неположительными
-def is_end(matrix_d, n, m):
+def is_end(matrix_d: np.ndarray) -> bool:
+    """
+    Проверяет симплекс-таблицу на оптимальность (поиск минимума)
+    :param matrix_d: симплекс-таблица
+    :return: True, если план оптимален, False в обратном случае
+    """
+    n = matrix_d.shape[1]
+    m = matrix_d.shape[0]
     for i in range(1, n):
-        # если есть хотя бы один положительный, то идем дальше
         if matrix_d[m - 1, i] > 0:
             return False
     return True
 
 
-# поиск разрешающего столбца
-# наибольший элемент - положительный - так как мы прошли проверку на виток цикла
-# берем максимальный элемент среди положительных в строчке с коэффициентами линейной формы
-def find_main_col(matrix_d, n, m) -> int:
+def find_main_col(matrix_d: np.ndarray) -> int:
+    """
+    Находит разрешающей столбец симплекс-матрицы.
+    :param matrix_d: симплекс-матрица
+    :return: индекс разрешающего столбца
+    """
     col = 1
-
+    n = matrix_d.shape[1]
+    m = matrix_d.shape[0]
     for i in range(2, n):
         if matrix_d[m - 1, i] > matrix_d[m - 1, col]:
             col = i
     return col
 
 
-# выбираем минимальный положительный элемент из разрешающего столбца
-def find_main_row(matrix_d, main_col, m) -> int:
+def find_main_row(matrix_d: np.ndarray, main_col: int) -> int:
+    """
+    Находит разрешающую строку.
+    :param matrix_d: симплекс-матрица
+    :param main_col: текущий разрешающий столбец
+    :return: индекс разрешающей строки
+
+    :exception Бросает базовое исключение, если функция не ограничена на заданной области, то есть задача не имеет решений
+    """
     row = 0
-    # проверка на то, есть ли вообще хотя бы один положительный элемент
+    m = matrix_d.shape[0]
     for i in range(m - 1):
         if matrix_d[i, main_col] > 0:
             row = i
@@ -63,10 +84,3 @@ def find_main_row(matrix_d, main_col, m) -> int:
                 row = i
 
     return row
-
-
-def show_matrix(matrix):
-    for i in matrix:
-        for s in i:
-            print(s, end="\t")
-        print()

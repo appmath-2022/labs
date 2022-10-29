@@ -1,7 +1,13 @@
 import numpy as np
 
-
-def add_variables(matrix, linear_form):
+def add_variables(matrix: np.ndarray, linear_form: list) -> (np.ndarray, list):
+    """
+     Функция, которая используется в случае использования симметричной формы задачи линейного программирования. Добавляет
+    новые искусственные переменные в симплекс-таблицу и целевую функцию, чтобы скомпенсировать знаки неравенства
+    :param matrix: Исходная симплекс-матрица
+    :param linear_form: Исходная целевая функция
+    :return: Новая симплекс-матрица, новая целевая функция
+    """
     m = matrix.shape[0]
     n = matrix.shape[1]
     linear_form = np.append(linear_form, np.zeros(m))
@@ -12,7 +18,13 @@ def add_variables(matrix, linear_form):
     return matrix, linear_form, basis
 
 
-def build_start_basis(matrix, basis):
+def build_start_basis(matrix: np.ndarray, basis: list) -> (np.ndarray, list):
+    """
+    Приводит симплекс-таблицу к единичному виду, выделяет базис, однако он необязательно должен быть опорным
+    :param matrix: Исходная симплекс-матрица
+    :param basis: Исходный базис(если есть). Если нет, нужно использовать просто пустой лист
+    :return: Новая симплекс-матрица, новый базис
+    """
     n = matrix.shape[1]
     m = matrix.shape[0]
     row = 0
@@ -37,7 +49,15 @@ def build_start_basis(matrix, basis):
     return matrix, basis
 
 
-def remove_negative_elements(matrix, basis):
+def remove_negative_elements(matrix: np.ndarray, basis: list) -> (np.ndarray, list):
+    """
+    Анализирует симплекс-матрицу на наличие отрицательных свободных членов. Если таковых нет, вернется исходная матрица.
+    В противном случае отрицательные элементы будут удалены из матрицы, а базис перестроен.
+    :param matrix: Исходная симплекс-матрица
+    :param basis: Исходный базис
+    :return: Новая симплекс-матрица, новый базис
+    :exception: Данная задача линейного программирования не имеет решений
+    """
     n = matrix.shape[1]
     m = matrix.shape[0]
     flag = True
@@ -87,7 +107,14 @@ def remove_negative_elements(matrix, basis):
     return matrix, basis
 
 
-def transform_matrix(matrix, row, col):
+def transform_matrix(matrix: np.ndarray, row: int, col: int) -> np.ndarray:
+    """
+    Непосредственно добавляет определенную переменную в базис
+    :param matrix: Исходная симплекс-таблица.
+    :param row: Строка, в которой содержится разрешающий элемент.
+    :param col: Столбец, в котором содержится разрешающий элемент.
+    :return: Новая симплекс-матрица
+    """
     main_element = matrix[row, col]
     new_table = matrix.copy()
     for j in range(matrix.shape[1]):
@@ -100,7 +127,14 @@ def transform_matrix(matrix, row, col):
     return new_table
 
 
-def add_linear_form(matrix, basis, linear_form):
+def add_linear_form(matrix: np.ndarray, basis: list, linear_form: list):
+    """Добавляет в симплекс-таблицу целевую функцию. Целевая функция предварительно приводится к виду, соответствующему
+    базисным переменным.
+    :param matrix: Исходная симплекс-таблица.
+    :param basis: Исходный базис.
+    :param linear_form: Исходная целевая функция.
+    :returns: Новая симплекс-матрица
+    """
     n = matrix.shape[1]
     last_line_simplex_matrix = np.array([])
     for i in range(n):
@@ -111,30 +145,3 @@ def add_linear_form(matrix, basis, linear_form):
         last_line_simplex_matrix = np.append(last_line_simplex_matrix, -tmp_sum + linear_form[i])
 
     return np.append(matrix, [last_line_simplex_matrix], axis=0)
-
-
-def check_ones(matrix: np.array):
-    m = matrix.shape[0]
-    n = matrix.shape[1]
-
-    cover_basis = np.zeros(m - 1)
-
-    for j in range(1, n):
-        zeros = 0
-        ones = 0
-        last_one = -1
-        for i in range(m - 1):
-            if matrix[i, j] != 0 and matrix[i, j] != 1:
-                continue
-            if matrix[i, j] == 1:
-                last_one = i
-                ones += 1
-            else:
-                zeros += 1
-
-        if zeros == m - 2 and ones == 1:
-            cover_basis[last_one] = last_one + 1
-    if len(np.where(cover_basis == 0)[0]) == 0:
-        return True, cover_basis
-    return False, cover_basis
-

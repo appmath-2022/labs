@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module initial</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>initial</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-add_linear_form"><strong>add_linear_form</strong></a>(matrix: numpy.ndarray, basis: list, linear_form: list)</dt><dd><tt>Добавляет&nbsp;в&nbsp;симплекс-таблицу&nbsp;целевую&nbsp;функцию.&nbsp;Целевая&nbsp;функция&nbsp;предварительно&nbsp;приводится&nbsp;к&nbsp;виду,&nbsp;соответствующему<br>
+базисным&nbsp;переменным.<br>
+:param&nbsp;matrix:&nbsp;Исходная&nbsp;симплекс-таблица.<br>
+:param&nbsp;basis:&nbsp;Исходный&nbsp;базис.<br>
+:param&nbsp;linear_form:&nbsp;Исходная&nbsp;целевая&nbsp;функция.<br>
+:returns:&nbsp;Новая&nbsp;симплекс-матрица</tt></dd></dl>
+ <dl><dt><a name="-add_variables"><strong>add_variables</strong></a>(matrix: numpy.ndarray, linear_form: list) -&gt; (&lt;class 'numpy.ndarray'&gt;, &lt;class 'list'&gt;)</dt><dd><tt>&nbsp;Функция,&nbsp;которая&nbsp;используется&nbsp;в&nbsp;случае&nbsp;использования&nbsp;симметричной&nbsp;формы&nbsp;задачи&nbsp;линейного&nbsp;программирования.&nbsp;Добавляет<br>
+новые&nbsp;искусственные&nbsp;переменные&nbsp;в&nbsp;симплекс-таблицу&nbsp;и&nbsp;целевую&nbsp;функцию,&nbsp;чтобы&nbsp;скомпенсировать&nbsp;знаки&nbsp;неравенства<br>
+:param&nbsp;matrix:&nbsp;Исходная&nbsp;симплекс-матрица<br>
+:param&nbsp;linear_form:&nbsp;Исходная&nbsp;целевая&nbsp;функция<br>
+:return:&nbsp;Новая&nbsp;симплекс-матрица,&nbsp;новая&nbsp;целевая&nbsp;функция</tt></dd></dl>
+ <dl><dt><a name="-build_start_basis"><strong>build_start_basis</strong></a>(matrix: numpy.ndarray, basis: list) -&gt; (&lt;class 'numpy.ndarray'&gt;, &lt;class 'list'&gt;)</dt><dd><tt>Приводит&nbsp;симплекс-таблицу&nbsp;к&nbsp;единичному&nbsp;виду,&nbsp;выделяет&nbsp;базис,&nbsp;однако&nbsp;он&nbsp;необязательно&nbsp;должен&nbsp;быть&nbsp;опорным<br>
+:param&nbsp;matrix:&nbsp;Исходная&nbsp;симплекс-матрица<br>
+:param&nbsp;basis:&nbsp;Исходный&nbsp;базис(если&nbsp;есть).&nbsp;Если&nbsp;нет,&nbsp;нужно&nbsp;использовать&nbsp;просто&nbsp;пустой&nbsp;лист<br>
+:return:&nbsp;Новая&nbsp;симплекс-матрица,&nbsp;новый&nbsp;базис</tt></dd></dl>
+ <dl><dt><a name="-remove_negative_elements"><strong>remove_negative_elements</strong></a>(matrix: numpy.ndarray, basis: list) -&gt; (&lt;class 'numpy.ndarray'&gt;, &lt;class 'list'&gt;)</dt><dd><tt>Анализирует&nbsp;симплекс-матрицу&nbsp;на&nbsp;наличие&nbsp;отрицательных&nbsp;свободных&nbsp;членов.&nbsp;Если&nbsp;таковых&nbsp;нет,&nbsp;вернется&nbsp;исходная&nbsp;матрица.<br>
+В&nbsp;противном&nbsp;случае&nbsp;отрицательные&nbsp;элементы&nbsp;будут&nbsp;удалены&nbsp;из&nbsp;матрицы,&nbsp;а&nbsp;базис&nbsp;перестроен.<br>
+:param&nbsp;matrix:&nbsp;Исходная&nbsp;симплекс-матрица<br>
+:param&nbsp;basis:&nbsp;Исходный&nbsp;базис<br>
+:return:&nbsp;Новая&nbsp;симплекс-матрица,&nbsp;новый&nbsp;базис<br>
+:exception:&nbsp;Данная&nbsp;задача&nbsp;линейного&nbsp;программирования&nbsp;не&nbsp;имеет&nbsp;решений</tt></dd></dl>
+ <dl><dt><a name="-transform_matrix"><strong>transform_matrix</strong></a>(matrix: numpy.ndarray, row: int, col: int) -&gt; numpy.ndarray</dt><dd><tt>Непосредственно&nbsp;добавляет&nbsp;определенную&nbsp;переменную&nbsp;в&nbsp;базис<br>
+:param&nbsp;matrix:&nbsp;Исходная&nbsp;симплекс-таблица.<br>
+:param&nbsp;row:&nbsp;Строка,&nbsp;в&nbsp;которой&nbsp;содержится&nbsp;разрешающий&nbsp;элемент.<br>
+:param&nbsp;col:&nbsp;Столбец,&nbsp;в&nbsp;котором&nbsp;содержится&nbsp;разрешающий&nbsp;элемент.<br>
+:return:&nbsp;Новая&nbsp;симплекс-матрица</tt></dd></dl>
+</td></tr></table>
+</body></html>
