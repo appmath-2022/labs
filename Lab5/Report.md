@@ -2,4 +2,4 @@
 
 Невозможно найти минимум
 
-![8](/report screens/8.png)
+![8](report_screens/8.png)
