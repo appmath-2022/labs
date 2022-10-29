@@ -48,7 +48,7 @@ simplex_table, start_basis = initial.remove_negative_elements(simplex_table, sta
 print("Выражаем целевую функцию через начальные базисные переменные")
 simplex_table = initial.add_linear_form(simplex_table, start_basis, linear_form)
 print("Ищем оптимальный план")
-simplex_table, result = optimal.solve(start_basis, simplex_table)
+simplex_table, result = optimal.optimize(start_basis, simplex_table)
 print("Оптимальный план:")
 print(result)
 print("Значение функции:")
