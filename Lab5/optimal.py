@@ -71,16 +71,18 @@ def find_main_row(matrix_d: np.ndarray, main_col: int) -> int:
     row = 0
     m = matrix_d.shape[0]
     for i in range(m - 1):
-        if matrix_d[i, main_col] > 0:
-            row = i
-            break
+        if matrix_d[i, main_col] != 0:
+            if matrix_d[i, 0] / matrix_d[i, main_col] > 0:
+                row = i
+                break
 
-    if row == 0 and matrix_d[0, main_col] <= 0:
+    if row == 0 and matrix_d[0, 0] / matrix_d[0, main_col] <= 0:
         raise Exception("Функция не ограничена на заданной области")
 
     for i in range(m - 1):
-        if matrix_d[i, main_col] > 0:
-            if matrix_d[i, 0] / matrix_d[i, main_col] <= matrix_d[row, 0] / matrix_d[row, main_col]:
-                row = i
+        if matrix_d[i, main_col] != 0:
+            if matrix_d[i, 0] / matrix_d[i, main_col] > 0:
+                if matrix_d[i, 0] / matrix_d[i, main_col] <= matrix_d[row, 0] / matrix_d[row, main_col]:
+                    row = i
 
     return row
