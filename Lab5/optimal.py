@@ -1,16 +1,18 @@
 import numpy as np
 
 
-def optimize(matrix_b: list, matrix_d: np.ndarray) -> (np.ndarray, np.ndarray):
+def optimize(matrix_b: list, matrix_d: np.ndarray, max_n_iter: int) -> (np.ndarray, np.ndarray):
     """
     Находит оптимальный план по опорному
     :param matrix_b: Базис после поиска опорного плана.
     :param matrix_d: Симплекс-таблица
+    :param: max_n_iter: Максимальное количество итераций
     :return: Решенная симплекс-таблица, оптимальный план
     """
     n = matrix_d.shape[1]
     m = matrix_d.shape[0]
-    while not is_end(matrix_d):
+    counter = 0
+    while not is_end(matrix_d) and counter < max_n_iter:
         main_col = find_main_col(matrix_d)
         main_row = find_main_row(matrix_d, main_col)
         matrix_b[main_row] = main_col
@@ -22,6 +24,7 @@ def optimize(matrix_b: list, matrix_d: np.ndarray) -> (np.ndarray, np.ndarray):
                 for j in range(n):
                     new_table[i, j] = matrix_d[i, j] - matrix_d[i, main_col] * new_table[main_row, j]
         matrix_d = new_table
+        counter += 1
     result = np.zeros(n - 1)
     for i in range(n - 1):
         k = matrix_b.index(i + 1) if i + 1 in matrix_b else -1
@@ -50,13 +53,10 @@ def find_main_col(matrix_d: np.ndarray) -> int:
     :param matrix_d: симплекс-матрица
     :return: индекс разрешающего столбца
     """
-    col = 1
-    n = matrix_d.shape[1]
-    m = matrix_d.shape[0]
-    for i in range(2, n):
-        if matrix_d[m - 1, i] > matrix_d[m - 1, col]:
-            col = i
-    return col
+    elements = matrix_d[-1, 1:]
+    max_e = np.amax(elements, axis=0)
+    col = np.where(elements == max_e)[0]
+    return col + 1
 
 
 def find_main_row(matrix_d: np.ndarray, main_col: int) -> int:
