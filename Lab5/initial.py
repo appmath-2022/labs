@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def add_variables(matrix: np.ndarray, linear_form: list) -> (np.ndarray, list):
     """
      Функция, которая используется в случае использования симметричной формы задачи линейного программирования. Добавляет
@@ -60,23 +61,23 @@ def remove_negative_elements(matrix: np.ndarray, basis: list) -> (np.ndarray, li
     """
     n = matrix.shape[1]
     m = matrix.shape[0]
-    flag = True
+    flag = False
     while not flag:
         flag = True
 
         for j in range(m):
-            if matrix[0, j] < 0:
+            if matrix[j, 0] < 0:
                 flag = False
         if not flag:
             print("Убираем элементы")
             row = [0]
             # находим наибольший по модулю свободный элемент
             for i in range(m):
-                if abs(matrix[i, 0]) > abs(matrix[row[0], 0]):
+                if matrix[i, 0] < matrix[row[0], 0]:
                     row = [i]
                 # на случай, если есть два числа, одинаковых по модулю, но в одной строке будут отрицательные элементы,
                 # а в другой - нет
-                elif abs(matrix[i, 0]) == abs(matrix[row[0], 0]):
+                elif matrix[i, 0] == matrix[row[0], 0]:
                     row.append(i)
 
             is_negative_existed = False
@@ -91,7 +92,7 @@ def remove_negative_elements(matrix: np.ndarray, basis: list) -> (np.ndarray, li
 
             col = 1
             for j in range(1, n):
-                if abs(matrix[row, j]) > abs(matrix[row, col]):
+                if matrix[row, j] < matrix[row, col]:
                     col = j
 
             main_element = matrix[row, col]
