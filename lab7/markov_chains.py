@@ -7,10 +7,23 @@ def read() -> np.ndarray:
     file = open("matrix.txt", "r")
     matrix = [[float(num) for num in line.split(',')] for line in file]
     matrix = np.array(matrix)
+    epsilon = 1e-6
+    correct_matrix = True
+    for i in range(matrix.shape[0]):
+        line_sum = 0
+        for j in range(matrix.shape[1]):
+            line_sum += matrix[i][j]
+        if abs(line_sum - 1) > epsilon:
+            correct_matrix = False
+    if not correct_matrix:
+        print("Your matrix is incorrect")
+        return
     return matrix
 
 
 def numerical_solution(matrix: np.ndarray) -> np.ndarray:
+    if matrix is None:
+        return
     index = np.random.randint(0, matrix.shape[0] - 1)
     pred_vector = matrix[index]
 
@@ -37,6 +50,8 @@ def numerical_solution(matrix: np.ndarray) -> np.ndarray:
 
 
 def analytical_solution(matrix: np.ndarray) -> np.ndarray:
+    if matrix is None:
+        return
     eigenvalues, left_eigenvectors = linalg.eig(matrix, right=False, left=True)
     vector = left_eigenvectors[:, 0]
     vector_norm = [x/np.sum(vector).real for x in vector]
