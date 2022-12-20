@@ -1,6 +1,9 @@
 import random
 import numpy as np
+import matplotlib.pyplot as plt
 import pandas as pd
+import sklearn
+import seaborn as sns
 
 
 def generate_data(size):
@@ -24,7 +27,21 @@ def recall(true, pred):
     return tp / (tp + fn)
 
 
-def f_measure(true, pred):
+def f_score(true, pred):
     p = precision(true, pred)
     r = recall(true, pred)
     return 2 * (p * r) / (p + r)
+
+
+def print_all_metrics(true, pred):
+    metrics = pd.Series(data={'accuracy': accuracy(true, pred),
+                              'precision': precision(true, pred),
+                              'recall': recall(true, pred),
+                              'F1 score': f_score(true, pred)})
+    print(metrics)
+
+
+def plot_data(data):
+    plt.rcParams['axes.prop_cycle'] = plt.cycler(color=['#32a1ce', '#121212'])
+    sns.scatterplot(x='x', y='y', hue='ans', data=data)
+    plt.show()
